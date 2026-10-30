@@ -1,0 +1,107 @@
+---
+import { siteConfig } from '../data/site';
+
+interface Props {
+  className?: string;
+  showLabels?: boolean;
+}
+
+const { className = "", showLabels = false } = Astro.props;
+
+interface SocialLinkItem {
+  name: string;
+  url: string;
+  icon: string;
+  color: string;
+}
+
+const rawLinks: Array<{ name: string; url?: string; icon: string; color: string }> = [
+  {
+    name: "GitHub",
+    url: siteConfig.github,
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`,
+    color: "#FFFFFF",
+  },
+  {
+    name: "Email",
+    url: siteConfig.email ? `mailto:${siteConfig.email}` : "",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>`,
+    color: "#22D3EE",
+  },
+  {
+    name: "LinkedIn",
+    url: siteConfig.linkedin,
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>`,
+    color: "#60A5FA",
+  },
+  {
+    name: "Facebook",
+    url: siteConfig.facebook,
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>`,
+    color: "#818CF8",
+  },
+  {
+    name: "Website",
+    url: siteConfig.website,
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>`,
+    color: "#34D399",
+  },
+];
+
+const links: SocialLinkItem[] = rawLinks.filter(
+  (item): item is SocialLinkItem => typeof item.url === 'string' && item.url.trim().length > 0
+);
+---
+
+<div class:list={["social-links-wrap", className]}>
+  {links.map((link) => (
+    <a
+      href={link.url}
+      target={link.url.startsWith("mailto:") ? undefined : "_blank"}
+      rel={link.url.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+      class="social-link"
+      aria-label={link.name}
+      title={link.name}
+    >
+      <span class="social-icon" set:html={link.icon} />
+      {showLabels && <span class="social-label">{link.name}</span>}
+    </a>
+  ))}
+</div>
+
+<style>
+  .social-links-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.65rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+  }
+
+  .social-link:hover {
+    color: #FFFFFF;
+    background: rgba(124, 58, 237, 0.2);
+    border-color: var(--accent-violet);
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

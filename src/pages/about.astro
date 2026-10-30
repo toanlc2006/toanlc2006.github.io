@@ -1,0 +1,405 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import { siteConfig } from '../data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const avatarSrc = base ? `${base}/images/profile/avatar.svg` : '/images/profile/avatar.svg';
+
+const milestones = [
+  {
+    year: "2024 — Hiện tại",
+    title: "Chuyên sâu vào Web Hiện đại & Clean Architecture",
+    description: "Tập trung nghiên cứu sâu về Astro, TypeScript, tối ưu hóa hiệu năng render, SEO kỹ thuật và các mô hình kiến trúc web tĩnh hướng tương lai.",
+  },
+  {
+    year: "2023 — 2024",
+    title: "Xây dựng nền tảng Lập trình & Thuật toán",
+    description: "Thành thạo JavaScript (ES6+), cấu trúc dữ liệu, thuật toán cơ bản, lập trình hướng đối tượng và quy trình quản lý phiên bản với Git/GitHub.",
+  },
+  {
+    year: "2022 — 2023",
+    title: "Khởi đầu Hành trình Công nghệ Thông tin",
+    description: "Bắt đầu những dòng mã đầu tiên với HTML/CSS, làm quen với tư duy phân tích hệ thống và kiến trúc máy tính.",
+  },
+];
+
+const interests = [
+  {
+    title: "Frontend Engineering",
+    desc: "Đắm chìm vào các kỹ thuật CSS hiện đại, Grid, Flexbox, responsive design và các tương tác vi mô tinh tế.",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>`
+  },
+  {
+    title: "Performance & DX",
+    desc: "Đề cao tốc độ tải trang, kích thước gói mã tối thiểu và trải nghiệm phát triển mượt mà với zero-JS by default.",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2"><path d="m13 2-2 10h9L7 22l2-10H0z"></path></svg>`
+  },
+  {
+    title: "Clean Code & Standards",
+    desc: "Viết mã nguồn rõ nghĩa, chia tách component rành mạch và tuân thủ các chuẩn mực semantic web.",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>`
+  },
+  {
+    title: "Continuous Learning",
+    desc: "Thường xuyên cập nhật các thay đổi mới nhất từ các tiêu chuẩn ECMAScript, trình duyệt và cộng đồng mã nguồn mở.",
+    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>`
+  }
+];
+---
+
+<BaseLayout
+  title={`About Me — ${siteConfig.name}`}
+  description="Tìm hiểu thêm về định hướng, hành trình học tập và tư duy phát triển phần mềm của tôi."
+>
+  <div class="container about-page">
+    <SectionHeading
+      tag="Introduction"
+      title="About Me"
+      subtitle="Hành trình học tập, niềm đam mê với công nghệ web và mục tiêu xây dựng những sản phẩm chất lượng."
+    />
+
+    <!-- Who I Am Grid -->
+    <div class="who-i-am-grid">
+      <div class="who-text-card glass-panel">
+        <h3 class="card-heading text-gradient">Who I Am</h3>
+        <p class="about-p">
+          Xin chào! Tôi là <strong>{siteConfig.name}</strong>, một sinh viên ngành Công nghệ Thông tin đam mê tạo dựng những sản phẩm web có tính thẩm mỹ cao, tốc độ phản hồi nhanh và mang lại giá trị thực tế.
+        </p>
+        <p class="about-p">
+          Tôi thích đào sâu vào bản chất của các công nghệ mình sử dụng thay vì chỉ dừng lại ở bề mặt cú pháp. Với tôi, việc xây dựng một website không chỉ là ráp nối các thư viện, mà là quá trình thiết kế một trải nghiệm hoàn chỉnh cho người dùng.
+        </p>
+        <div class="about-details-list">
+          <div class="detail-item">
+            <span class="detail-label">Vai trò:</span>
+            <span class="detail-value">{siteConfig.role}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Khu vực:</span>
+            <span class="detail-value">{siteConfig.location}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Trạng thái:</span>
+            <span class="detail-value text-gradient-ember">{siteConfig.statusBadge}</span>
+          </div>
+        </div>
+        <div class="who-social-cta">
+          <SocialLinks showLabels={true} />
+        </div>
+      </div>
+
+      <div class="who-avatar-col">
+        <div class="glass-panel avatar-box">
+          <img
+            src={avatarSrc}
+            alt="Developer Avatar"
+            width="340"
+            height="340"
+            class="avatar-img"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline / Journey Section -->
+    <section class="timeline-section reveal-on-scroll">
+      <h3 class="section-sub-title text-gradient">My Journey &amp; Milestones</h3>
+      <p class="section-sub-desc">Quá trình tích lũy kiến thức và rèn luyện kỹ năng qua từng giai đoạn:</p>
+
+      <div class="timeline-container">
+        {milestones.map((m, idx) => (
+          <div class="timeline-item">
+            <div class="timeline-marker">
+              <span class="marker-dot"></span>
+              {idx < milestones.length - 1 && <span class="marker-line"></span>}
+            </div>
+            <div class="glass-panel timeline-content">
+              <span class="badge badge-violet timeline-year">{m.year}</span>
+              <h4 class="timeline-title">{m.title}</h4>
+              <p class="timeline-desc">{m.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- What I Enjoy -->
+    <section class="enjoy-section reveal-on-scroll">
+      <h3 class="section-sub-title text-gradient">What I Enjoy</h3>
+      <p class="section-sub-desc">Những lĩnh vực tạo cho tôi nhiều cảm hứng sáng tạo nhất:</p>
+
+      <div class="interests-grid">
+        {interests.map((item) => (
+          <div class="glass-panel interest-card">
+            <div class="interest-icon" set:html={item.icon} />
+            <h4 class="interest-title">{item.title}</h4>
+            <p class="interest-desc">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Goals Section -->
+    <section class="goals-section reveal-on-scroll">
+      <div class="glass-panel goals-box">
+        <h3 class="card-heading text-gradient">Goals &amp; Aspirations</h3>
+        <div class="goals-grid">
+          <div class="goal-item">
+            <span class="goal-num">01</span>
+            <div>
+              <h4 class="goal-title">Nâng cao năng lực Full-stack</h4>
+              <p class="goal-desc">Mở rộng hiểu biết sâu sắc từ giao diện người dùng tới thiết kế API và cơ sở dữ liệu có khả năng mở rộng tốt.</p>
+            </div>
+          </div>
+          <div class="goal-item">
+            <span class="goal-num">02</span>
+            <div>
+              <h4 class="goal-title">Đóng góp cho Open Source</h4>
+              <p class="goal-desc">Tham gia xây dựng và chia sẻ các thư viện, component mã nguồn mở hữu ích cho cộng đồng lập trình viên.</p>
+            </div>
+          </div>
+          <div class="goal-item">
+            <span class="goal-num">03</span>
+            <div>
+              <h4 class="goal-title">Xây dựng sản phẩm thực tế</h4>
+              <p class="goal-desc">Phát triển các ứng dụng giải quyết trực tiếp những vấn đề trong học tập, công việc và đời sống hàng ngày.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .about-page {
+    padding-bottom: 3rem;
+  }
+
+  .who-i-am-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.85fr;
+    gap: 2.5rem;
+    align-items: center;
+    margin-bottom: 4rem;
+  }
+
+  .who-text-card {
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .card-heading {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-p {
+    font-size: 1.05rem;
+    color: #CBD5E1;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.2rem 0;
+    margin: 1.2rem 0;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .detail-item {
+    display: flex;
+    gap: 0.85rem;
+    font-size: 0.95rem;
+  }
+
+  .detail-label {
+    color: var(--text-dim);
+    min-width: 90px;
+  }
+
+  .detail-value {
+    color: #FFFFFF;
+    font-weight: 500;
+  }
+
+  .who-avatar-col {
+    display: flex;
+    justify-content: center;
+  }
+
+  .avatar-box {
+    padding: 1.2rem;
+    border-radius: 28px;
+    max-width: 320px;
+    width: 100%;
+  }
+
+  .avatar-img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  /* Timeline */
+  .timeline-section,
+  .enjoy-section,
+  .goals-section {
+    margin-bottom: 4.5rem;
+  }
+
+  .section-sub-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-sub-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+
+  .timeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 1.5rem;
+    position: relative;
+  }
+
+  .timeline-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 24px;
+    flex-shrink: 0;
+  }
+
+  .marker-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--accent-cyan);
+    box-shadow: 0 0 12px var(--accent-cyan);
+    margin-top: 1.2rem;
+    z-index: 2;
+  }
+
+  .marker-line {
+    width: 2px;
+    flex: 1;
+    background: linear-gradient(180deg, var(--accent-cyan), rgba(124, 58, 237, 0.2));
+    margin-top: 0.5rem;
+  }
+
+  .timeline-content {
+    flex: 1;
+    padding: 1.8rem;
+    border-radius: var(--radius-md);
+  }
+
+  .timeline-year {
+    margin-bottom: 0.6rem;
+  }
+
+  .timeline-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Interests */
+  .interests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .interest-card {
+    padding: 2rem 1.6rem;
+    border-radius: var(--radius-md);
+  }
+
+  .interest-icon {
+    margin-bottom: 1.2rem;
+  }
+
+  .interest-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 0.5rem;
+  }
+
+  .interest-desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  /* Goals */
+  .goals-box {
+    padding: 2.8rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .goal-item {
+    display: flex;
+    gap: 1.2rem;
+  }
+
+  .goal-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent-violet);
+    font-family: monospace;
+    line-height: 1;
+  }
+
+  .goal-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 0.4rem;
+  }
+
+  .goal-desc {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 860px) {
+    .who-i-am-grid {
+      grid-template-columns: 1fr;
+    }
+    .who-avatar-col {
+      order: -1;
+    }
+  }
+</style>

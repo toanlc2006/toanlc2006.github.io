@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => {
+    return import.meta.env.PROD ? !data.draft : true;
+  });
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+// Compatible rendering between Astro 4 and Astro 5
+let Content: any;
+if (typeof (post as any).render === 'function') {
+  const rendered = await (post as any).render();
+  Content = rendered.Content;
+} else {
+  const { render } = await import('astro:content');
+  const rendered = await render(post);
+  Content = rendered.Content;
+}
+---
+
+<PostLayout post={post}>
+  <Content />
+</PostLayout>

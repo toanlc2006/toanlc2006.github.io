@@ -1,0 +1,283 @@
+---
+// BackgroundEffects.astro - Layered Ambient Lighting, Smoke & Ember Particles
+---
+
+<div class="ambient-background" aria-hidden="true">
+  <!-- Layer 1: Base Gradient Mesh & Glow Orbs -->
+  <div class="ambient-mesh">
+    <div class="glow-orb orb-violet"></div>
+    <div class="glow-orb orb-indigo"></div>
+    <div class="glow-orb orb-cyan"></div>
+    <div class="glow-orb orb-ember"></div>
+  </div>
+
+  <!-- Layer 2: Abstract Soft Smoke Veils -->
+  <div class="ambient-smoke">
+    <div class="smoke-layer smoke-one"></div>
+    <div class="smoke-layer smoke-two"></div>
+  </div>
+
+  <!-- Layer 3: Interactive Canvas for Floating Ember Particles -->
+  <canvas id="ember-canvas" class="ember-canvas"></canvas>
+
+  <!-- Layer 4: Dark Vignette & Grid Texture Overlay -->
+  <div class="ambient-vignette"></div>
+</div>
+
+<style>
+  .ambient-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    background-color: var(--bg-deep);
+  }
+
+  /* Glow Orbs */
+  .ambient-mesh {
+    position: absolute;
+    inset: -20%;
+    filter: blur(80px);
+    opacity: 0.65;
+    animation: ambientShift 36s ease-in-out infinite alternate;
+  }
+
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+  }
+
+  .orb-violet {
+    width: 55vw;
+    height: 55vw;
+    top: -10%;
+    left: 10%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.45) 0%, rgba(124, 58, 237, 0) 70%);
+  }
+
+  .orb-indigo {
+    width: 50vw;
+    height: 50vw;
+    top: 30%;
+    right: -10%;
+    background: radial-gradient(circle, rgba(67, 56, 202, 0.4) 0%, rgba(67, 56, 202, 0) 70%);
+  }
+
+  .orb-cyan {
+    width: 45vw;
+    height: 45vw;
+    bottom: -10%;
+    left: 20%;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.3) 0%, rgba(34, 211, 238, 0) 70%);
+  }
+
+  .orb-ember {
+    width: 40vw;
+    height: 40vw;
+    top: 50%;
+    left: -5%;
+    background: radial-gradient(circle, rgba(249, 115, 22, 0.22) 0%, rgba(249, 115, 22, 0) 70%);
+  }
+
+  /* Smoke Layers */
+  .ambient-smoke {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    mix-blend-mode: color-dodge;
+  }
+
+  .smoke-layer {
+    position: absolute;
+    width: 150vw;
+    height: 150vh;
+    top: -25vh;
+    left: -25vw;
+    background: radial-gradient(ellipse at 50% 50%, rgba(147, 197, 253, 0.08) 0%, rgba(124, 58, 237, 0.03) 40%, transparent 70%);
+    filter: blur(50px);
+  }
+
+  .smoke-one {
+    animation: smokeDriftOne 45s linear infinite;
+  }
+
+  .smoke-two {
+    animation: smokeDriftTwo 55s linear infinite reverse;
+    opacity: 0.6;
+  }
+
+  /* Ember Canvas */
+  .ember-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    mix-blend-mode: screen;
+  }
+
+  /* Subtle Vignette & Contrast Guard */
+  .ambient-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(7, 9, 20, 0.6) 100%);
+  }
+
+  @media (max-width: 768px) {
+    .ambient-mesh {
+      filter: blur(50px);
+      opacity: 0.55;
+    }
+    .glow-orb {
+      width: 70vw;
+      height: 70vw;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ambient-mesh,
+    .smoke-one,
+    .smoke-two {
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  // High-performance, lightweight ember particle engine
+  (function initEmbers() {
+    const canvas = document.getElementById('ember-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Respect reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      canvas.style.display = 'none';
+      return;
+    }
+
+    let animationFrameId: number;
+    let width = 0;
+    let height = 0;
+
+    interface Particle {
+      x: number;
+      y: number;
+      size: number;
+      speedY: number;
+      speedX: number;
+      color: string;
+      alpha: number;
+      maxAlpha: number;
+      fadeIn: boolean;
+      life: number;
+      maxLife: number;
+    }
+
+    const colors = [
+      '249, 115, 22',  // Ember orange
+      '251, 191, 36',  // Warm gold
+      '34, 211, 238',  // Soft cyan
+      '251, 113, 133'  // Soft pink
+    ];
+
+    let particles: Particle[] = [];
+
+    function resize() {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      
+      // Determine max particle count (desktop: 28, mobile: 14 to save battery)
+      const count = window.innerWidth < 768 ? 14 : 28;
+      
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push(createParticle(true));
+      }
+    }
+
+    function createParticle(randomY = false): Particle {
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const maxAlpha = 0.35 + Math.random() * 0.45;
+      const size = 1.2 + Math.random() * 2.2;
+      return {
+        x: Math.random() * width,
+        y: randomY ? Math.random() * height : height + Math.random() * 20,
+        size,
+        speedY: -(0.25 + Math.random() * 0.55),
+        speedX: (Math.random() - 0.5) * 0.35,
+        color,
+        alpha: randomY ? Math.random() * maxAlpha : 0,
+        maxAlpha,
+        fadeIn: true,
+        life: 0,
+        maxLife: 200 + Math.random() * 300
+      };
+    }
+
+    function update() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.life++;
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        // Fade in and out
+        if (p.fadeIn) {
+          p.alpha += 0.01;
+          if (p.alpha >= p.maxAlpha) {
+            p.fadeIn = false;
+          }
+        } else if (p.life > p.maxLife * 0.7) {
+          p.alpha -= 0.008;
+        }
+
+        // Reset dead particle
+        if (p.y < -10 || p.alpha <= 0 || p.life >= p.maxLife) {
+          particles[i] = createParticle(false);
+          continue;
+        }
+
+        // Draw particle with gentle glow
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.color}, ${Math.max(0, p.alpha)})`;
+        ctx.shadowBlur = p.size * 3;
+        ctx.shadowColor = `rgba(${p.color}, 0.8)`;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      animationFrameId = requestAnimationFrame(update);
+    }
+
+    // Handle visibility to save CPU when tab is hidden
+    function handleVisibilityChange() {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrameId);
+      } else {
+        animationFrameId = requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener('resize', resize);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    resize();
+    animationFrameId = requestAnimationFrame(update);
+  })();
+</script>

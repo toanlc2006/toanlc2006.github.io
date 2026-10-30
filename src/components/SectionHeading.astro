@@ -1,0 +1,72 @@
+---
+interface Props {
+  tag?: string;
+  title: string;
+  subtitle?: string;
+  align?: "left" | "center";
+}
+
+const { tag, title, subtitle, align = "left" } = Astro.props;
+---
+
+<div class:list={["section-heading", `align-${align}`]}>
+  {tag && (
+    <div class="heading-tag">
+      <span class="status-live-dot"></span>
+      <span>{tag}</span>
+    </div>
+  )}
+  <h2 class="heading-title text-gradient">{title}</h2>
+  {subtitle && <p class="heading-subtitle">{subtitle}</p>}
+</div>
+
+<style>
+  .section-heading {
+    margin-bottom: 2.8rem;
+  }
+
+  .align-center {
+    text-align: center;
+  }
+
+  .align-center .heading-tag {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .heading-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    background: rgba(124, 58, 237, 0.12);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #C4B5FD;
+    margin-bottom: 0.85rem;
+  }
+
+  .heading-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.65rem;
+  }
+
+  .heading-subtitle {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  .align-center .heading-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

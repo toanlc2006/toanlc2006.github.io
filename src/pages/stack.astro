@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { skillsData, type SkillProficiency } from '../data/skills';
+import { siteConfig } from '../data/site';
+
+function getProficiencyBadge(level: SkillProficiency) {
+  switch (level) {
+    case "Comfortable":
+      return { class: "badge-green", label: "Comfortable" };
+    case "Learning":
+      return { class: "badge-cyan", label: "Learning" };
+    case "Exploring":
+      return { class: "badge-ember", label: "Exploring" };
+  }
+}
+---
+
+<BaseLayout
+  title={`Tech Stack & Tools — ${siteConfig.name}`}
+  description="Bộ công cụ, ngôn ngữ lập trình, thư viện frontend và quy trình phát triển của tôi."
+>
+  <div class="container stack-page">
+    <SectionHeading
+      tag="Toolkit"
+      title="Technology Stack"
+      subtitle="Tổng hợp các ngôn ngữ, framework, công cụ và công nghệ mà tôi sử dụng trong quá trình học tập và xây dựng sản phẩm."
+    />
+
+    <!-- Legend Bar -->
+    <div class="glass-panel legend-bar">
+      <span class="legend-title">Mức độ quen thuộc:</span>
+      <div class="legend-items">
+        <span class="badge badge-green">Comfortable</span>
+        <span class="legend-desc">— Thường xuyên sử dụng và làm chủ cú pháp cốt lõi</span>
+      </div>
+      <div class="legend-items">
+        <span class="badge badge-cyan">Learning</span>
+        <span class="legend-desc">— Đang thực hành trong các dự án cụ thể</span>
+      </div>
+      <div class="legend-items">
+        <span class="badge badge-ember">Exploring</span>
+        <span class="legend-desc">— Đang nghiên cứu tài liệu &amp; tìm hiểu nguyên lý</span>
+      </div>
+    </div>
+
+    <!-- Categories List -->
+    <div class="stack-categories-list">
+      {skillsData.map((category) => (
+        <section class="glass-panel stack-category-card reveal-on-scroll">
+          <div class="category-header">
+            <h3 class="category-title text-gradient">{category.title}</h3>
+            <p class="category-desc">{category.description}</p>
+          </div>
+
+          <div class="skills-grid">
+            {category.skills.map((skill) => {
+              const badge = getProficiencyBadge(skill.level);
+              return (
+                <div class:list={["skill-card", { "is-highlight": skill.highlight }]}>
+                  <div class="skill-info">
+                    <span class="skill-name">{skill.name}</span>
+                    <span class:list={["badge", badge.class]}>{badge.label}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .stack-page {
+    padding-bottom: 4rem;
+  }
+
+  .legend-bar {
+    padding: 1.2rem 1.8rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+  }
+
+  .legend-title {
+    font-weight: 700;
+    color: #FFFFFF;
+  }
+
+  .legend-items {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .legend-desc {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+  }
+
+  .stack-categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .stack-category-card {
+    padding: 2.2rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .category-header {
+    margin-bottom: 1.6rem;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 1rem;
+  }
+
+  .category-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .category-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-card {
+    padding: 1rem 1.2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+  }
+
+  .skill-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+  }
+
+  .skill-card.is-highlight {
+    border-color: rgba(124, 58, 237, 0.3);
+    background: rgba(124, 58, 237, 0.06);
+  }
+
+  .skill-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+</style>

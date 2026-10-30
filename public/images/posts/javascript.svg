@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <defs>
+    <radialGradient id="jsbg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#262210" />
+      <stop offset="100%" stop-color="#070914" />
+    </radialGradient>
+    <linearGradient id="jsg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#F97316" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#jsbg)" />
+  <rect x="330" y="130" width="140" height="140" rx="24" fill="#171A24" stroke="url(#jsg)" stroke-width="2.5" />
+  <text x="400" y="225" text-anchor="middle" fill="#FBBF24" font-family="system-ui, sans-serif" font-size="70" font-weight="900">JS</text>
+  <text x="400" y="340" text-anchor="middle" fill="#F4F5FA" font-family="system-ui, sans-serif" font-size="20" font-weight="700">JAVASCRIPT FOUNDATIONS</text>
+  <text x="400" y="370" text-anchor="middle" fill="#A5A9BC" font-family="system-ui, sans-serif" font-size="14">Execution Context, Closures &amp; Asynchronous Patterns</text>
+</svg>

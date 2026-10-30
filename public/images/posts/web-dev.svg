@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <defs>
+    <radialGradient id="wdbg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0E2333" />
+      <stop offset="100%" stop-color="#070914" />
+    </radialGradient>
+    <linearGradient id="wdg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#wdbg)" />
+  <!-- Web browser symbol -->
+  <rect x="250" y="100" width="300" height="190" rx="16" fill="#101726" stroke="url(#wdg)" stroke-width="2" />
+  <rect x="250" y="100" width="300" height="32" rx="16" fill="#172036" />
+  <circle cx="272" cy="116" r="4" fill="#FB7185" />
+  <circle cx="286" cy="116" r="4" fill="#FBBF24" />
+  <circle cx="300" cy="116" r="4" fill="#34D399" />
+  <rect x="320" y="109" width="180" height="14" rx="7" fill="#0C111C" />
+  <path d="M370 170 L345 195 L370 220" stroke="#22D3EE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M430 170 L455 195 L430 220" stroke="#7C3AED" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M410 165 L390 225" stroke="#F97316" stroke-width="2.5" stroke-linecap="round" />
+  <text x="400" y="340" text-anchor="middle" fill="#F4F5FA" font-family="system-ui, sans-serif" font-size="20" font-weight="700">MODERN WEB ARCHITECTURE</text>
+  <text x="400" y="370" text-anchor="middle" fill="#A5A9BC" font-family="system-ui, sans-serif" font-size="14">Astro, Component-Driven Design &amp; Performance</text>
+</svg>

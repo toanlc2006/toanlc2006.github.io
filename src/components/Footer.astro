@@ -1,0 +1,199 @@
+---
+import { siteConfig } from '../data/site';
+import SocialLinks from './SocialLinks.astro';
+
+const currentYear = new Date().getFullYear();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+function getHref(path: string) {
+  if (path === '/') return base ? `${base}/` : '/';
+  const cleanPath = path.replace(/^\//, '');
+  return base ? `${base}/${cleanPath}` : `/${cleanPath}`;
+}
+---
+
+<footer class="site-footer">
+  <div class="container footer-container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href={getHref('/')} class="footer-logo">
+          <span class="logo-bracket">&lt;</span>
+          <span>{siteConfig.name}</span>
+          <span class="logo-cursor">/&gt;</span>
+        </a>
+        <p class="footer-tagline">{siteConfig.tagline}</p>
+        <div class="footer-status">
+          <span class="status-live-dot"></span>
+          <span>{siteConfig.statusBadge}</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <h3 class="footer-col-title">Navigation</h3>
+        <ul class="footer-links">
+          {siteConfig.navItems.map((item) => (
+            <li>
+              <a href={getHref(item.href)} class="footer-link">{item.name}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-social-col">
+        <h3 class="footer-col-title">Connect</h3>
+        <p class="footer-connect-desc">Sẵn sàng kết nối và trao đổi về các dự án web &amp; công nghệ:</p>
+        <SocialLinks showLabels={true} />
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        &copy; {currentYear} {siteConfig.name}. Thiết kế &amp; xây dựng với Astro + GitHub Pages.
+      </p>
+      <button id="back-to-top" class="back-to-top-btn" aria-label="Cuộn lên đầu trang">
+        <span>Về đầu trang</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+      </button>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    z-index: 10;
+    background: rgba(7, 9, 20, 0.85);
+    border-top: 1px solid var(--border-subtle);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding-top: 3.5rem;
+    padding-bottom: 2rem;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr;
+    gap: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .footer-logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .logo-bracket {
+    color: var(--accent-violet);
+  }
+
+  .logo-cursor {
+    color: var(--accent-cyan);
+  }
+
+  .footer-tagline {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    max-width: 380px;
+    line-height: 1.6;
+  }
+
+  .footer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: #94A3B8;
+  }
+
+  .footer-col-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-link {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    transition: color var(--transition-fast), transform var(--transition-fast);
+    display: inline-block;
+  }
+
+  .footer-link:hover {
+    color: var(--accent-cyan);
+    transform: translateX(3px);
+  }
+
+  .footer-connect-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.8rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .back-to-top-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: rgba(255, 255, 255, 0.03);
+    transition: all var(--transition-fast);
+  }
+
+  .back-to-top-btn:hover {
+    color: #FFFFFF;
+    border-color: var(--accent-violet);
+    background: rgba(124, 58, 237, 0.15);
+  }
+
+  @media (max-width: 860px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>
+
+<script>
+  (function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  })();
+</script>

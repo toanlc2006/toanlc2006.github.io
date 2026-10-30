@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+import '../styles/animations.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import BackgroundEffects from '../components/BackgroundEffects.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
+import { siteConfig } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = `${siteConfig.name} — ${siteConfig.role}`,
+  description = siteConfig.tagline,
+  image = "/images/profile/avatar.svg",
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://toanlc2006.github.io');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const faviconHref = base ? `${base}/favicon.svg` : '/favicon.svg';
+const ogImageURL = new URL(base ? `${base}${image.startsWith('/') ? '' : '/'}${image}` : image, canonicalURL);
+---
+
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={faviconHref} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImageURL} />
+  </head>
+  <body>
+    <!-- Ambient Dynamic Background -->
+    <BackgroundEffects />
+
+    <!-- Top Navigation Bar -->
+    <Navbar />
+
+    <!-- Main Viewport Slot -->
+    <main class="main-content" id="main-content">
+      <slot />
+    </main>
+
+    <!-- Global Footer -->
+    <Footer />
+
+    <!-- Intersection Scroll Reveal -->
+    <ScrollReveal />
+  </body>
+</html>

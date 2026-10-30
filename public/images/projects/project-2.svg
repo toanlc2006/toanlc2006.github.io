@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" fill="none">
+  <defs>
+    <radialGradient id="p2bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#191530" />
+      <stop offset="100%" stop-color="#070914" />
+    </radialGradient>
+    <linearGradient id="p2g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#p2bg)" />
+  <!-- Circuit lines -->
+  <g stroke="url(#p2g)" stroke-opacity="0.25" stroke-width="1.5">
+    <path d="M50 240 H200 L260 160 H540 L600 240 H750" fill="none" />
+    <path d="M120 360 H280 L340 300 H460 L520 360 H680" fill="none" />
+  </g>
+  <!-- Code editor mockup -->
+  <rect x="140" y="80" width="520" height="320" rx="16" fill="#0E1220" stroke="url(#p2g)" stroke-width="1.5" stroke-opacity="0.6" />
+  <rect x="140" y="80" width="520" height="38" rx="16" fill="#151A2C" />
+  <circle cx="165" cy="99" r="5" fill="#FB7185" />
+  <circle cx="182" cy="99" r="5" fill="#FBBF24" />
+  <circle cx="199" cy="99" r="5" fill="#34D399" />
+  <!-- Syntax code lines -->
+  <g fill-opacity="0.8" transform="translate(170, 145)">
+    <rect x="0" y="0" width="80" height="12" rx="4" fill="#FB7185" />
+    <rect x="90" y="0" width="110" height="12" rx="4" fill="#22D3EE" />
+    <rect x="210" y="0" width="60" height="12" rx="4" fill="#F97316" />
+    <rect x="20" y="30" width="140" height="12" rx="4" fill="#A5A9BC" />
+    <rect x="170" y="30" width="90" height="12" rx="4" fill="#FBBF24" />
+    <rect x="20" y="60" width="90" height="12" rx="4" fill="#7C3AED" />
+    <rect x="120" y="60" width="200" height="12" rx="4" fill="#34D399" />
+    <rect x="40" y="90" width="120" height="12" rx="4" fill="#22D3EE" />
+    <rect x="170" y="90" width="150" height="12" rx="4" fill="#A5A9BC" />
+    <rect x="20" y="120" width="40" height="12" rx="4" fill="#7C3AED" />
+    <rect x="0" y="150" width="130" height="12" rx="4" fill="#FB7185" />
+    <rect x="140" y="150" width="80" height="12" rx="4" fill="#22D3EE" />
+  </g>
+  <text x="400" y="445" text-anchor="middle" fill="#A5A9BC" font-family="system-ui, sans-serif" font-size="14" font-weight="500">DEVELOPER UTILITY · INTERACTIVE TOOL</text>
+</svg>

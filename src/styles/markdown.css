@@ -1,0 +1,200 @@
+/* ==========================================================================
+   MARKDOWN PROSE & BLOG POST STYLING
+   Optimized for readability, dark ambient aesthetics, and code readability
+   ========================================================================== */
+
+.prose {
+  color: var(--text-main);
+  font-size: 1.08rem;
+  line-height: 1.8;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+/* Headings */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: #FFFFFF;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  margin-top: 2.4rem;
+  margin-bottom: 1rem;
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+
+.prose h1 {
+  font-size: 2.25rem;
+  background: linear-gradient(135deg, #FFFFFF 40%, #C7D2FE 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 0.8rem;
+}
+
+.prose h2 {
+  font-size: 1.65rem;
+  position: relative;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.prose h3 {
+  font-size: 1.35rem;
+  color: #E2E8F0;
+}
+
+.prose h4 {
+  font-size: 1.15rem;
+  color: #CBD5E1;
+}
+
+/* Paragraphs & Text */
+.prose p {
+  margin-bottom: 1.4rem;
+  color: #E2E8F0;
+}
+
+.prose strong {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.prose em {
+  font-style: italic;
+  color: #CBD5E1;
+}
+
+/* Links */
+.prose a {
+  color: var(--accent-cyan);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color var(--transition-fast), text-shadow var(--transition-fast);
+}
+
+.prose a:hover {
+  color: #67E8F9;
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
+}
+
+/* Lists */
+.prose ul,
+.prose ol {
+  margin-top: 0.8rem;
+  margin-bottom: 1.5rem;
+  padding-left: 1.6rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+  color: #E2E8F0;
+}
+
+.prose li::marker {
+  color: var(--accent-violet);
+}
+
+/* Blockquotes */
+.prose blockquote {
+  margin: 1.8rem 0;
+  padding: 1rem 1.4rem;
+  background: rgba(124, 58, 237, 0.08);
+  border-left: 4px solid var(--accent-violet);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: #DDD6FE;
+  font-style: italic;
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Horizontal Rule */
+.prose hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  margin: 2.8rem 0;
+}
+
+/* Inline Code */
+.prose :not(pre) > code {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FBBF24;
+  padding: 0.2rem 0.45rem;
+  border-radius: 5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 0.88em;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Code Blocks */
+.prose pre {
+  margin: 1.6rem 0;
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  background: #0B0F1C !important;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-subtle);
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.prose pre code {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* Tables */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  display: block;
+  overflow-x: auto;
+  background: rgba(16, 20, 38, 0.5);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.prose th,
+.prose td {
+  padding: 0.85rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.prose th {
+  background: rgba(255, 255, 255, 0.04);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.prose td {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.prose tr:last-child td {
+  border-bottom: none;
+}
+
+/* Images in Markdown */
+.prose img {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  margin: 2rem auto;
+  box-shadow: var(--shadow-subtle);
+}
